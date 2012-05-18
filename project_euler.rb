@@ -1,3 +1,5 @@
+require "monkeypatches.rb"
+
 class ProjectEuler
   
   # find the nth number in the fibonacci sequence
@@ -6,39 +8,14 @@ class ProjectEuler
     fibonacci(n-1) + fibonacci(n-2)
   end
   
-  # calculate the factorial of the input
-  def factorial(n)
-    return 1 if n<=0
-    (1..n).reduce(1){ |prod,i| prod*i }
-  end
-  
-  # check if the input number is a palindrome
-  def palindrome?(n)
-    n.to_s == n.to_s.reverse
-  end
-  
-  # get all the factors of the number, including itself
-  def get_all_factors(num)
-    factors = [1,num]
-    2.upto(Math.sqrt(num).floor).each do |i|
-      factors.concat([i,num/i]) if num%i == 0
-    end
-    factors.uniq.sort!
-  end
-
-  # get the proper divisors of a number (i.e. all factors smaller than itself)
-  def get_proper_divisors(num)
-    get_all_factors(num).reject{ |i| i==num }
-  end  
-  
   # calculate nPr - permutations  without repetition
   def permutations(n, r)
-    factorial(n)/factorial(n-r)
+    (n.factorial)/((n-r).factorial)
   end
   
   # calculate nCr - combinations without repetition 
   def combinations(n, r)
-    permutations(n, r)/factorial(r)
+    permutations(n, r)/(r.factorial)
   end
   
   # find the median of an array of numbers
@@ -76,48 +53,14 @@ class ProjectEuler
     primes
   end
 
-  # checks if the number n is 0-to-p pandigital 
-  def pandigital_zero?(n, p)        
-    if n.to_s.length == p
-      all_digits = (0..p).to_a
-      is_pand = true
-      while all_digits.count > 0 and n.to_s.length > 0
-        n, digit = n.divmod(10)
-        if all_digits.include?(digit)
-          all_digits.delete(digit)
-        else
-          is_pand = false
-          break
-        end
-      end
-      is_pand      
-    else
-      false
-    end    
-  end
-  
-  # checks if the number n is 1-to-p pandigital 
-  def pandigital?(n, p)        
-    if n.to_s.length == p and !n.to_s.include?('0')      
-      all_digits = (1..p).to_a
-      is_pand = true
-      while all_digits.count > 0 and n.to_s.length > 0
-        n, digit = n.divmod(10)
-        if all_digits.include?(digit)
-          all_digits.delete(digit)
-        else
-          is_pand = false
-          break
-        end
-      end
-      is_pand      
-    else
-      false
-    end    
-  end
-  
+  # checks if the number n is a-to-b pandigital 
+  # e.g. 1112334445567888 is 1-to-8 pandigital
+  def pandigital?(n, a, b)    
+    needed_digits = (a..b).to_a.to_s
+    present_digits = n.to_s.split(//).uniq.sort.to_s
+    needed_digits == present_digits
+  end  
 
-  
   #given a triangle of numbers (i.e. where row n has n numbers), gets the sum of the largest chain
   def cumulative_sum_triangle(input_triangle)
     cumulative_sums_array = []
