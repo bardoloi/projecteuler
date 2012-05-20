@@ -87,7 +87,7 @@ class ProjectEuler
     cumulative_sums_array.last.max
   end
   
-  
+  #given a number (upto 4 digits), print its equivalent in words, e.g. 1234 - "one thousand two hundred and thirty four"
   def words_from_int(n)
 
     words = {}
@@ -163,8 +163,6 @@ class ProjectEuler
     
     result    
   end
-  
-
 
   def get_all_factors_in_pairs(num)
     factors = [[1,num]]
@@ -212,20 +210,17 @@ class ProjectEuler
   end
   
   def is_prime?(num)
-    if num == 1 
-      false
-    elsif num == 2
-      true
-    else
-      factor_found = false    
-      2.upto(Math.sqrt(num).floor).each do |i|
-        if num%i == 0
-          factor_found = true
-          break
-        end
+    return false if num <= 1   
+    return true if num == 2
+    
+    factor_found = false    
+    2.upto(Math.sqrt(num).floor).each do |i|
+      if num%i == 0
+        factor_found = true
+        break
       end
-      !factor_found
     end
+    !factor_found
   end
 
   # returns a hash with key as the prime factor and val as the power of that factor
@@ -246,37 +241,41 @@ class ProjectEuler
   end
 
   
-  # Given: a randomly sorted stack of pancakes of different diameters (1-100) 
-  # Task: you need to flip them into ascending order (largest at the bottom)
-  # e.g. In: [5 3 2 6 1 4] -> Out: [1 2 3 4 5 6] (the topmost pancake is at index 0)
-  # Criteria: you can only re-sort pancakes by flipping an entire substack
-  # e.g. [5 4 3 2 1] -> flip(2) -> [2 3 4 5 1]  
-  # i.e. flip(i) puts your ladle under the ith pancake from the bottom, and flips all the pancakes above it (including the ith one)
-  # flip(1) flips the entire stack - i.e. reverses its order
-  def stack_o_pancakes(pancakes)
-    # 1. find the "switch" points of the array - i.e. where they switch from ascending to descending order or vice versa
-    #     a. if no switch points, then pancakes are all in order - just flip 0 or 1 times and return!
-    # 2. Define 
-    #       A = subarray from the top down to the first switch point, 
-    #       B = subarray from first switch point to the second
-    # 3. Run the subroutine to fit A into B via flips
-    # 4. Call the method again recursively!
+  # ---------- sorting questions -----------------------------------------------
+  
+  # Problem 1: sorting a stack of pancakes
+  # Given: a vertical stack of pancakes, all of different diameters, sorted randomly
+  # Task: provide the steps required to flip them into ascending order (largest pancake at the bottom)
+  # e.g. Unsorted: [5 3 2 6 1 4] -> Sorted: [1 2 3 4 5 6] (the topmost pancake is at index 0)
+  # Criteria: you can only re-sort pancakes by flipping a substack, e.g. [3 2 1 4 5] -> flip(3) -> [1 2 3 4 5]  
+  # flip(i) puts your ladle below the ith pancake from the top, and flips all the pancakes above it (including the ith)
+  # flip(n) flips the entire stack - i.e. reverses its order
+
+  # Approach:
+  # 1. Find the largest pancake in the stack and move it to the bottom
+  # 2. Recursively call the method on the smaller substacks
+  def sort_stack_of_pancakes(pancakes)
+    stack_size = pancakes.length
+    return [] if stack_size <= 1
     
-    # 1. find the "switch" points of the array - i.e. where they switch from ascending to descending order or vice versa
-    trend = []
-    (0...pancakes.length).to_a.each do |i|
-      trend << ( (i == 0) ? 0 : (pancakes[i] > pancakes[i-1] ? 1 : -1))
+    flips = []
+    # move the largest pancake to the bottom
+    pos_of_largest_pancake = pancakes.index(pancakes.max) + 1
+    if pos_of_largest_pancake == 1  # largest one is at the top
+      pancakes = pancakes.reverse # flip all the pancakes
+      flips << stack_size
+    elsif pos_of_largest_pancake < stack_size # largest one is somewhere in the middle
+      pancakes[0, pos_of_largest_pancake] = pancakes[0, pos_of_largest_pancake].reverse #flip the substack
+      pancakes = pancakes.reverse # flip all the pancakes
+      flips << pos_of_largest_pancake << stack_size
     end
-    p trend
-    
-    transitions = []
-    (1...(trend.length-1)).to_a.each do |i|
-      transitions << i unless trend[i] == trend[i+1]
-    end
-    transitions    
-    
-    # 1.a. if no switch points, then pancakes are all in order - just return!
-    return nil if (transitions.length == 0) && trend.include?(1)
-        
+
+    # now recurse on the remaining substacks
+    flips+= sort_stack_of_pancakes(pancakes[0, stack_size - 1])  
   end  
+  
+  # -------------------- In progress -------------------------------------------------------
+  
+  
+    
 end

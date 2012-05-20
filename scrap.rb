@@ -15,12 +15,10 @@ end
 
 #a1 = ARGV[0].to_i
 
-#a = [7, 2, 3, 4, 5, 2, 1, 3, 4, 8, 7, 4]
-a = [5, 4, 3, 2, 1]
+a = [5,1,2,3,4]
 p a
-p $pe.stack_o_pancakes(a)
-
-
+# p $pe.sort_stack_of_pancakes(a)
+p $pe.sort_stack_of_pancakes(a)
 
 
 # # find the median
