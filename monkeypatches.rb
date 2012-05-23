@@ -24,5 +24,5 @@ class Integer
   def get_proper_divisors
     self.get_all_factors.reject{ |i| i==self }
   end
-  
+    
 end

@@ -8,16 +8,35 @@ class ProjectEuler
     fibonacci(n-1) + fibonacci(n-2)
   end
   
+  
   # calculate nPr - permutations  without repetition
-  def permutations(n, r)
+  def num_of_permutations(n, r)
     (n.factorial)/((n-r).factorial)
   end
   
+  
   # calculate nCr - combinations without repetition 
-  def combinations(n, r)
-    permutations(n, r)/(r.factorial)
+  def num_of_combinations(n, r)
+    num_of_permutations(n, r)/(r.factorial)
   end
   
+  
+  # return all permutations of a string (characters may repeat)
+  def all_permutations(str)
+    # note: Ruby arrays have a built-in permutation method; we will write out own
+    case str.length
+    when 0..1 then [str]
+    else
+      all_perms = []
+      str.split(//).uniq.each do |char| 
+        subpermutations = all_permutations(str.sub(char, "")) # recursively call this method on the substring (excluding current character)
+        subpermutations.each { |perm| all_perms.push( char + perm) } # add each permutation to the list
+      end
+      all_perms
+    end #end case
+  end
+
+
   # find the median of an array of numbers
   def median(arr)
     len = arr.length
@@ -25,6 +44,7 @@ class ProjectEuler
     return arr.sort[(len/2).floor] if len.odd?
     arr.sort.slice((len/2)-1, 2).min        
   end
+
   
   # find all primes less than the input number
   def primes_less_than(n)
@@ -36,6 +56,7 @@ class ProjectEuler
     end
     primes.sort
   end
+
   
   # find the first n primes
   def first_n_primes(n)
@@ -47,26 +68,27 @@ class ProjectEuler
       i = 3
       while primes.count < n
         primes << i if is_prime?(i)
-        i += 2
+        i+= 2
       end
     end
     primes
   end
 
+
   # checks if the number n is a-to-b pandigital 
-  # e.g. 1112334445567888 is 1-to-8 pandigital
+  # e.g. 1112334445567888 is 1-to-8 pandigital, 13578 and 123456789 are not
   def pandigital?(n, a, b)    
     needed_digits = (a..b).to_a.to_s
     present_digits = n.to_s.split(//).uniq.sort.to_s
     needed_digits == present_digits
   end  
 
+
   #given a triangle of numbers (i.e. where row n has n numbers), gets the sum of the largest chain
   def cumulative_sum_triangle(input_triangle)
     cumulative_sums_array = []
 
     (0..input.count-1).each do |line|
-
       if line==0
         cumulative_sums_array << input[0]
         next
@@ -86,68 +108,19 @@ class ProjectEuler
 
     cumulative_sums_array.last.max
   end
-  
-  #given a number (upto 4 digits), print its equivalent in words, e.g. 1234 - "one thousand two hundred and thirty four"
-  def words_from_int(n)
-
-    words = {}
-    words['ones'] = {1=>'one',2=>'two',3=>'three',4=>'four',5=>'five',6=>'six',7=>'seven',8=>'eight',9=>'nine'}
-    words['twos'] = {10=>'ten',11=>'eleven',12=>'twelve',13=>'thirteen',14=>'fourteen',15=>'fifteen',16=>'sixteen',17=>'seventeen',18=>'eighteen',19=>'nineteen',20=>'twenty',30=>'thirty',40=>'forty',50=>'fifty',60=>'sixty',70=>'seventy',80=>'eighty',90=>'ninety'}  
-
-    # 4 digits or less
-    n = n.remainder(10**4)
     
-    translation = ""
-    no_of_digits = n.to_s.length
     
-    while no_of_digits > 0
-      
-      digit = n.quo(10**(no_of_digits-1)).to_i
-      if digit == 0
-        no_of_digits -= 1
-        next
-      end
-      
-      remainder = n.modulo(10**(no_of_digits-1)).to_i
-
-      case no_of_digits          
-      when 4
-        translation << words['ones'][digit] + " thousand "
-        no_of_digits -= 1
-      when 3
-        translation << words['ones'][digit] + " hundred "
-        no_of_digits -= 1
-      when 2
-        translation << 'and ' if translation.length > 0
-        if words['twos'].keys.include?(digit*10 + remainder)
-          translation << words['twos'][digit*10 + remainder]
-          no_of_digits -= 2
-        else
-          translation << words['twos'][digit*10] + '-'
-          no_of_digits -= 1
-        end
-      else
-        translation << 'and ' unless translation[translation.length-1,1] == '-' || translation.length == 0
-        translation << words['ones'][digit]
-      end
-      
-      n = remainder
-      break if remainder == 0              
-    end
-    
-    translation = "zero" if translation.length == 0
-    translation.strip
-  end
-  
   def add_digit_factorials(num)
     sum = 0
     while (len = num.to_s.length) and num > 0
       digit,num = num.divmod(10**(len-1))
-      sum += factorial(digit)
+      sum+= digit.factorial
     end
     sum
   end
   
+  
+  # return the equivalent of input num (base 10) in base n
   def base_n(num, n)
     highest_pow = 0
     while num >= n**(highest_pow+1)
@@ -164,6 +137,7 @@ class ProjectEuler
     result    
   end
 
+
   def get_all_factors_in_pairs(num)
     factors = [[1,num]]
     2.upto(Math.sqrt(num).floor).each do |i|
@@ -171,9 +145,9 @@ class ProjectEuler
     end
     factors.uniq
   end
+
   
-  def all_factors(num)
-          
+  def all_factors(num)          
     factors = []
     powers = []
     as_powers_of_prime_factors(num).each do |k,v|
@@ -209,6 +183,7 @@ class ProjectEuler
     eigenvalues.sort!
   end
   
+  
   def is_prime?(num)
     return false if num <= 1   
     return true if num == 2
@@ -222,6 +197,7 @@ class ProjectEuler
     end
     !factor_found
   end
+
 
   # returns a hash with key as the prime factor and val as the power of that factor
   def as_powers_of_prime_factors(num)
@@ -238,8 +214,35 @@ class ProjectEuler
       i += 1
     end
     factors.select{ |k,v|  v > 0 && k > 1}
-  end
+  end  
 
+  
+  # array of the digits that make up the input number
+  def component_digits(n, unique = false)
+    digits = n.to_s.split(//).map { |i| i.to_i }
+    unique ? digits.uniq.sort : digits.sort 
+  end
+  
+  
+  # returns TRUE if the input number is a circular prime
+  # 197 is a circular prime because 197, 971, 719 are all primes
+  def is_circular_prime(n)
+    if n < 10
+      return true if [2,3,5,7].include?(n)
+      return false
+    end
+
+    digits = component_digits(n)
+    return false if digits.include?(0) || digits.include?(2) || digits.include?(4) || digits.include?(5) || digits.include?(6) || digits.include?(8)
+    
+    is_circ_prime = true  # initialize as true
+    digits.length.times {
+      is_circ_prime = is_prime?(digits.unshift(digits.pop).to_s.to_i)
+      break if !is_circ_prime
+    }    
+    is_circ_prime
+  end
+  
   
   # ---------- sorting questions -----------------------------------------------
   
@@ -250,11 +253,11 @@ class ProjectEuler
   # Criteria: you can only re-sort pancakes by flipping a substack, e.g. [3 2 1 4 5] -> flip(3) -> [1 2 3 4 5]  
   # flip(i) puts your ladle below the ith pancake from the top, and flips all the pancakes above it (including the ith)
   # flip(n) flips the entire stack - i.e. reverses its order
-
-  # Approach:
-  # 1. Find the largest pancake in the stack and move it to the bottom
-  # 2. Recursively call the method on the smaller substacks
   def sort_stack_of_pancakes(pancakes)
+    # Approach:
+    # 1. Find the largest pancake in the stack and move it to the bottom
+    # 2. Recursively call the method on the smaller substacks
+
     stack_size = pancakes.length
     return [] if stack_size <= 1
     
@@ -276,6 +279,4 @@ class ProjectEuler
   
   # -------------------- In progress -------------------------------------------------------
   
-  
-    
 end

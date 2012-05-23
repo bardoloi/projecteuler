@@ -13,12 +13,76 @@ unless  ARGV.empty?
 end
 #-------------------------------
 
-#a1 = ARGV[0].to_i
+a1 = ARGV[0]
 
-a = [5,1,2,3,4]
-p a
-# p $pe.sort_stack_of_pancakes(a)
-p $pe.sort_stack_of_pancakes(a)
+arrive_at_89 = [89, 145, 42, 20, 4, 16, 37, 58]
+
+i = number_of_89s = 0
+
+a1.to_i.times do
+  i+= 1  
+  digits = i.to_s.gsub('0', '').split(//).sort.to_s.to_i
+
+  if arrive_at_89.include?(digits)
+    number_of_89s += 1
+  else
+    sums = digits
+    until arrive_at_89.include?(sums) || sums == 1
+      sums = $pe.component_digits(sums).reduce(0) { |prod, n| prod+= n*n }
+    end  
+    if arrive_at_89.include?(sums)
+      number_of_89s += 1
+      arrive_at_89 << digits
+    end
+    # puts "For #{i}: #{sums}" 
+  end
+end
+puts number_of_89s
+
+# circular_primes = []
+# (1..999999).to_a.each do |i|
+#   next if i > 2 && i.even?
+#   unless circular_primes.include?(i.to_s)
+#     if $pe.is_circular_prime(i)
+#       cp = i.to_s.split(//)
+#       i.to_s.length.times do
+#         circular_primes << cp.unshift(cp.pop).to_s 
+#       end
+#       puts i
+#     end
+#   end
+# end
+# puts circular_primes.uniq.count
+
+# def is_concat_of_products(n)
+#   (1...n.length).each do |i|
+#     basenum = n[0, i].to_i
+#     concatnum = ""
+#     (1..9).to_a.each do |j|
+#       concatnum << (basenum*j).to_s
+#       break if concatnum.length >= n.length
+#     end
+#     return basenum if concatnum == n
+#   end
+#   -1
+# end
+# 
+# (1..9).to_a.permutation.sort.reverse.each do |num|
+#   basenum = is_concat_of_products(num.to_s)
+#   if basenum > -1
+#     puts basenum
+#     break
+#   end 
+# end
+
+# while a >= mins
+#   a-= 1
+#   if $pe.pandigital?(a, 1, 9)
+#     basenum = is_concat_of_products(a.to_s)  
+#     break unless basenum == -1  
+#   end
+# end
+# p a
 
 
 # # find the median
@@ -109,4 +173,3 @@ p $pe.sort_stack_of_pancakes(a)
 
 #-------------------------------
 puts "*"*20 + "Finish" + "*"*20
-
