@@ -9,6 +9,12 @@ class ProjectEuler
   end
   
   
+  # return TRUE if a number is a palindrome
+  def palindrome?(n)
+    n.to_s == n.to_s.reverse
+  end
+  
+  
   # calculate nPr - permutations  without repetition
   def num_of_permutations(n, r)
     (n.factorial)/((n-r).factorial)
@@ -198,6 +204,14 @@ class ProjectEuler
     !factor_found
   end
 
+  
+  def all_prime_factors(num)
+    factors = []
+    as_powers_of_prime_factors(num).each do |k,v|
+      factors << k
+    end    
+    factors
+  end
 
   # returns a hash with key as the prime factor and val as the power of that factor
   def as_powers_of_prime_factors(num)

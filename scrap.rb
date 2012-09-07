@@ -15,29 +15,51 @@ end
 
 a1 = ARGV[0]
 
-arrive_at_89 = [89, 145, 42, 20, 4, 16, 37, 58]
+0,0,r
+0,r,0
+r,0,0
+# 0,r,r
+# r,0,r
+# r,r,0
+# r,r,r
+0,0,-r
+0,-r,0
+-r,0,0
+# 0,-r,-r
+# -r,0,-r
+# -r,-r,0
+# -r,-r,-r
 
-i = number_of_89s = 0
 
-a1.to_i.times do
-  i+= 1  
-  digits = i.to_s.gsub('0', '').split(//).sort.to_s.to_i
+# 200p: 1
+# 100p: 2
+# 50p: 4
+# 20p: 10
+# 10p: 20
+# 5p: 40
+# 2p: 100
+# 1p: 200
 
-  if arrive_at_89.include?(digits)
-    number_of_89s += 1
-  else
-    sums = digits
-    until arrive_at_89.include?(sums) || sums == 1
-      sums = $pe.component_digits(sums).reduce(0) { |prod, n| prod+= n*n }
-    end  
-    if arrive_at_89.include?(sums)
-      number_of_89s += 1
-      arrive_at_89 << digits
-    end
-    # puts "For #{i}: #{sums}" 
-  end
-end
-puts number_of_89s
+# arrive_at_89 = [89, 145, 24, 2, 4, 16, 37, 58]
+# i = number_of_89s = 0
+# a1.to_i.times do
+#   i+= 1  
+#   sums = digits = i.to_s.gsub('0', '').split(//).sort.to_s.to_i
+# 
+#   if arrive_at_89.include?(digits)
+#     number_of_89s += 1
+#   else
+#     until arrive_at_89.include?(sums) || sums == 1
+#       sums = $pe.component_digits(sums).reduce(0) { |prod, n| prod+= n*n }
+#     end  
+#     if arrive_at_89.include?(sums)
+#       number_of_89s += 1
+#       arrive_at_89 << digits
+#     end
+#   end
+#   # puts "For #{i}: #{sums}" 
+# end
+# puts number_of_89s
 
 # circular_primes = []
 # (1..999999).to_a.each do |i|
