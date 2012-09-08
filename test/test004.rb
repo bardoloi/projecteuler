@@ -1,5 +1,5 @@
 require "test/unit"
-require "problems/004.rb"
+require_relative "../problems/004.rb"
 
 class TestProjectEuler < Test::Unit::TestCase
   def test_find_largest_product_palindrome

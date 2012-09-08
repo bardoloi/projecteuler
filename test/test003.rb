@@ -1,5 +1,5 @@
 require "test/unit"
-require "problems/003.rb"
+require_relative "../problems/003.rb"
 
 class TestProjectEuler < Test::Unit::TestCase
   def test_largest_prime_factor_of

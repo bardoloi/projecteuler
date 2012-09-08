@@ -1,5 +1,5 @@
 require "test/unit"
-require "problems/002.rb"
+require_relative "../problems/002.rb"
 
 class TestProjectEuler < Test::Unit::TestCase
   def test_sum_of_even_fibonacci_numbers_below_n

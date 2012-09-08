@@ -1,4 +1,6 @@
-require "project_euler.rb"
+# http://projecteuler.net/problem=2
+
+require_relative "../project_euler.rb"
 
 def sum_of_even_fibonacci_numbers_below_n(n)  
   sum = 0
@@ -20,3 +22,4 @@ def sum_of_even_fibonacci_numbers_below_n(n)
   sum
 end
 
+sum_of_even_fibonacci_numbers_below_n(100)

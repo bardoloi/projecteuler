@@ -1,5 +1,5 @@
 require "test/unit"
-require "problems/001.rb"
+require_relative "../problems/001.rb"
 
 class TestProjectEuler < Test::Unit::TestCase
   def test_sum_of_multiples_of_3or5_below_n

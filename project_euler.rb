@@ -1,4 +1,4 @@
-require "monkeypatches.rb"
+require_relative "monkeypatches.rb"
 
 class ProjectEuler
   
@@ -56,9 +56,10 @@ class ProjectEuler
   def primes_less_than(n)
     primes = []
     while n > 0
-      n-=1
-      next if (n+1)%2 == 0 && n > 1
-      primes << n+1 if is_prime?(n+1) 
+      p "Current n: #{n}"
+      n -= 1
+      next if (n + 1)%2 == 0 && n > 1
+      primes << (n + 1) if is_prime?(n + 1)
     end
     primes.sort
   end
@@ -68,9 +69,9 @@ class ProjectEuler
   def first_n_primes(n)
     primes = []
     case n
-    when 1 then primes = [1]
+    when 1 then primes = []
     else  
-      primes = [1,2]
+      primes = [2]
       i = 3
       while primes.count < n
         primes << i if is_prime?(i)

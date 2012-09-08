@@ -1,8 +1,10 @@
+# http://projecteuler.net/problem=4
+
 # Works for any n > 0 where n is no. of digits
 # Optimizations exist if you want to solve this for 3-digit numbers only, 
 # but I didn't find optimizations for any n > 0
 
-require "project_euler.rb"
+require_relative "../project_euler.rb"
 
 def find_largest_product_palindrome(no_of_digits)
   
