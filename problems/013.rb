@@ -2,17 +2,21 @@
 
 require_relative "../project_euler.rb"
 
-def get_first_ten_digits_of_sum(numbers)
-  
+def get_first_n_digits_of_sum(numbers, n)
+  get_sum_of_numbers_as_string(numbers)[0, n]
+end
+
+
+def get_sum_of_numbers_as_string(numbers)  
   sums_by_position = []
 
   # Step 1: Split each number into its component digits,  
   # then separately add up the digits in 1's place, the digits in 10's place, and so on.
   # Store the sum of digits in 1's place at sums_by_position[0], sum of 10's place at sums_by_position [1], and so on
   numbers.each do |num|
-    num.reverse!.split(//).each_index do |i|
+    num.reverse.split(//).each_index do |i|
       sums_by_position[i] = 0 if sums_by_position[i].nil?      
-      sums_by_position[i] += num[i,1].to_i
+      sums_by_position[i] += num.reverse[i,1].to_i
     end
   end
   
@@ -26,12 +30,11 @@ def get_first_ten_digits_of_sum(numbers)
     end    
   end
   
-  # Get the first 10 digits by combining the sums back together 
-  first_10_digits = ""
+  # Get the digits by combining the sums back together 
+  digits = ""
   (sums_by_position.count - 1).downto(0) do |i|
-    first_10_digits << sums_by_position[i].to_s
-    break unless first_10_digits.length < 10
-  end
+    digits << sums_by_position[i].to_s
+  end  
   
-  first_10_digits[0, 10]
+  digits  
 end
