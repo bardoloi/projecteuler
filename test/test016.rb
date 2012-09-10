@@ -2,10 +2,11 @@ require "test/unit"
 require_relative "../problems/016.rb"
 
 class TestProjectEuler < Test::Unit::TestCase
-  # def test_cheat_find_sum_of_digits_in_pow_of_2
-  #   assert_equal(26, cheat_find_sum_of_digits_in_pow_of_2(15))
-  #   assert_equal(1366, cheat_find_sum_of_digits_in_pow_of_2(1000))
-  # end
+
+  def test_cheat_find_sum_of_digits_in_pow_of_2
+    assert_equal(26, cheat_find_sum_of_digits_in_pow_of_2(15))
+    assert_equal(1366, cheat_find_sum_of_digits_in_pow_of_2(1000))
+  end
   
   def test_find_digits_in_pow_of_2
     assert_equal("1", find_digits_in_pow_of_2(0))

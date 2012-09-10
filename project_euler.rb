@@ -90,32 +90,6 @@ class ProjectEuler
     needed_digits == present_digits
   end  
 
-
-  #given a triangle of numbers (i.e. where row n has n numbers), gets the sum of the largest chain
-  def cumulative_sum_triangle(input_triangle)
-    cumulative_sums_array = []
-
-    (0..input.count-1).each do |line|
-      if line==0
-        cumulative_sums_array << input[0]
-        next
-      end
-
-      last_line = cumulative_sums_array[line-1]
-
-      current_line = []
-      (0..line).each do |col|
-        possible_values = []
-        possible_values << input[line][col] + last_line[col]    unless col == line
-        possible_values << input[line][col] + last_line[col-1]  unless col == 0
-        current_line << possible_values.max
-      end
-      cumulative_sums_array << current_line
-    end
-
-    cumulative_sums_array.last.max
-  end
-    
     
   def add_digit_factorials(num)
     sum = 0
