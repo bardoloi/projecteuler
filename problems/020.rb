@@ -21,8 +21,7 @@ def find_digits_in_factorial(n)
   numbers = []
   n.times { numbers << prev_factorial }
 
-  require_relative "013.rb"
-  get_sum_of_numbers_as_string(numbers)  
+  ProjectEuler.get_sum_of_numbers_as_string(numbers)  
 end
 
 

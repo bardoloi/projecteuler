@@ -1,17 +1,14 @@
 # http://projecteuler.net/problem=14
 
-require_relative "../project_euler.rb"
-
 class Collatz
   
   @@chain_lengths = { 1 => 1 }
-
 
   def get_collatz_next_step(n)
     return 1 if n <= 1
     return n/2 if n.even?
     return 3*n + 1
-  end
+  end  
   
   
   def get_chain(n)
@@ -21,7 +18,7 @@ class Collatz
 
 
   def get_chain_length(n)
-    return 1 if n <= 1  # explicitly define endpoint in case @@chain_lengths[1] is not properly set up
+    return 1 if n <= 1  # explicitly define endpoint in case @@chain_lengths[1] isn't properly set up
     return @@chain_lengths[n] if @@chain_lengths.has_key?(n)
     
     #recursively find chain length

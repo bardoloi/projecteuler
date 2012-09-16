@@ -10,7 +10,7 @@
 # Replace c with (1000 - a - b)
 # => 2*(a**2 + b**2) + 2ab + 2(a+b)(1000 - a - b) = 1000000
 # Reduce the left hand side of this equation, we get:
-# 2000(a+b) - 2ab = 1000000
+# 1000(a+b) - ab = 500000
 
 # As a < b < c and a + b + c = 1000, b cannot exceed 499, and so a cannot exceed 498
 
@@ -19,7 +19,6 @@ def find_pythagorean_triplets
     (a+1).upto(499) do |b|
       if (1000*(a + b) - (a * b)) == 500000
         c = Math.sqrt((a**2) + (b**2)).to_i
-        p "A: #{a}, B: #{b}, C: #{c}"
         return a * b * c
       end
     end

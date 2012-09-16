@@ -5,13 +5,12 @@ require_relative "../project_euler.rb"
 def sum_of_even_fibonacci_numbers_below_n(n)  
   sum = 0
 
-  $pe = ProjectEuler.new
-  first = $pe.fibonacci(1)
-  second = $pe.fibonacci(2)
+  first = ProjectEuler.fibonacci(1)
+  second = ProjectEuler.fibonacci(2)
 
   return sum if first > n  
   sum += first if first.even?
-    
+  
   while second < n
     sum += second if second.even?
 
@@ -23,3 +22,4 @@ def sum_of_even_fibonacci_numbers_below_n(n)
 end
 
 sum_of_even_fibonacci_numbers_below_n(100)
+

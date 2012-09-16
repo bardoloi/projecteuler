@@ -5,13 +5,11 @@ require_relative "../project_euler.rb"
 def find_triangle_number(min_no_of_divisors)
   n = 0
   no_of_divisors = 0
-  $pe = ProjectEuler.new
 
   while no_of_divisors < min_no_of_divisors  
     n += 1
-    nth_triangle_number = n * (n + 1) / 2
-    no_of_divisors  =  $pe.all_factors(nth_triangle_number).count
+    no_of_divisors = ProjectEuler.triangle_number(n).get_all_factors.count # get_all_factors is a monkeypatch (see monkeypatches.rb in the home folder)
   end
     
-  n * (n + 1) / 2
+  $pe.triangle_number(n)
 end

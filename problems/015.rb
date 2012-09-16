@@ -9,6 +9,5 @@ def find_number_of_routes_across_grid(rows, cols)
   # Since backtracking is not allowed (i.e. only downward and rightward moves are allowed),
   # the total number of moves is always the same (#rows + #cols), and
   # total number of possible routes = nCr (where n = rows + cols)
-  $pe = ProjectEuler.new
-  $pe.num_of_combinations(rows + cols, rows)
+  ProjectEuler.num_of_combinations(rows + cols, rows)
 end

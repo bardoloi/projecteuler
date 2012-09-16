@@ -13,7 +13,7 @@ class TestProjectEuler < Test::Unit::TestCase
     start_date = Date.parse('1901-01-01')
     end_date = Date.parse('2000-12-31')
     wday = 0 # look for sundays    
-    assert_equal(1, count_wdays_on_first_of_months(start_date, end_date, wday))
+    assert_equal(171, count_wdays_on_first_of_months(start_date, end_date, wday))
   end
   
 end

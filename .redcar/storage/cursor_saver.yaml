@@ -1,0 +1,6 @@
+--- 
+cursor_positions: 
+  - :path: monkeypatches.rb
+    :cursor_offset: 0
+    :timestamp: 2012-05-20 20:48:00 -05:00
+files_to_retain: 0

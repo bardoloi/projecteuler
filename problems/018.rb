@@ -1,14 +1,12 @@
 # http://projecteuler.net/problem=18
 
-require_relative "../project_euler.rb"
+# require_relative "../project_euler.rb"
 
 #given a triangle of numbers (i.e. where row n has n numbers), gets the sum of the largest chain
 def calculate_cumulative_sum_of_triangle(input)
   cumulative_sums_array = []
 
   (0..input.count-1).each do |line|
-    p "Now doing line #{line}"
-    
     if line==0
       cumulative_sums_array << input[0]
       next
