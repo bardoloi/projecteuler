@@ -3,7 +3,7 @@ class Integer
   # calculate factorial of any number
   def factorial
     return 1 if self<=0
-    (1..self).reduce(1){ |prod,i| prod*i }
+    (1..self).reduce(:*)
   end
   
   # check if the input number is a palindrome

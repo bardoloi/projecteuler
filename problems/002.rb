@@ -1,21 +1,20 @@
 # http://projecteuler.net/problem=2
 
-require_relative "../project_euler.rb"
+# require_relative "../project_euler.rb"
 
-def sum_of_even_fibonacci_numbers_below_n(n)  
-  sum = 0
+def sum_of_even_fibonacci_numbers_below_n(n)
+  prev_fib_num = ProjectEuler.fibonacci(1)
+  return 0 if n < prev_fib_num
 
-  first = ProjectEuler.fibonacci(1)
-  second = ProjectEuler.fibonacci(2)
-
-  return sum if first > n  
-  sum += first if first.even?
+  current_fib_num = ProjectEuler.fibonacci(2)
   
-  while second < n
-    sum += second if second.even?
-
-    second += first 
-    first = second - first
+  sum = 0  
+  while current_fib_num < n
+    sum += current_fib_num if current_fib_num.even?
+    
+    # increment current_fib_num and prev_fib_num to the next respective fibonacci numbers    
+    current_fib_num += prev_fib_num 
+    prev_fib_num = current_fib_num - prev_fib_num
   end
   
   sum
